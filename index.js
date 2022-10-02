@@ -4,9 +4,9 @@ const paypal = require("paypal-rest-sdk");
 paypal.configure({
   mode: "sandbox", //sandbox or live
   client_id:
-    "AUJXoTkZIm3UUz42SvVaz9n8-mOBiJpsnvwPMf8KpUy3cG63nTQdH4zl6RcHxkuJ8WRDmyB4iXP_R9nb",
+    "AYoBdQoNi3u9FXGg80IIMeizcMm66N0IrOaWcOKqoYVBV-31ooUa9N0eebI0Tzr0EycmbsL9DUgUFwz6",
   client_secret:
-    "EFgoiSSi75eyOfLfFdctXbK7cNN9lXGajsTUW75XJrkEbz3ZtxJ9cjattUQfmK9KGlqBBFUH_nQ-LNSC",
+    "EI_aTcXWwKwOrGv4VlfMffsYRMBgbEE1SZCy94bO3PTIpV2ft8G44MgFkjgbr6gPO6BfXKBxDP3tO3Yt",
 });
 
 const PORT = process.env.PORT || 3000;
@@ -46,6 +46,7 @@ app.post("/pay", (req, res) => {
       },
     ],
   };
+  
 
   paypal.payment.create(create_payment_json, function (error, payment) {
     if (error) {
