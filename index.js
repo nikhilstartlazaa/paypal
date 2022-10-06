@@ -9,7 +9,7 @@ paypal.configure({
     "EI_aTcXWwKwOrGv4VlfMffsYRMBgbEE1SZCy94bO3PTIpV2ft8G44MgFkjgbr6gPO6BfXKBxDP3tO3Yt",
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 
@@ -22,8 +22,8 @@ app.post("/pay", (req, res) => {
       payment_method: "paypal",
     },
     redirect_urls: {
-      return_url: "https://paypalnode.herokuapp.com/success",
-      cancel_url: "https://paypalnode.herokuapp.com/cancel",
+      return_url: "https://127.0.0.1:3001/success",
+      cancel_url: "https://127.0.0.1:3001/cancel",
     },
     transactions: [
       {
@@ -46,7 +46,6 @@ app.post("/pay", (req, res) => {
       },
     ],
   };
-  
 
   paypal.payment.create(create_payment_json, function (error, payment) {
     if (error) {
@@ -77,18 +76,19 @@ app.get("/success", (req, res) => {
     ],
   };
 
-  paypal.payment.execute(paymentId, execute_payment_json, function (
-    error,
-    payment
-  ) {
-    if (error) {
-      console.log(error.response);
-      throw error;
-    } else {
-      console.log(JSON.stringify(payment));
-      res.send("Success");
+  paypal.payment.execute(
+    paymentId,
+    execute_payment_json,
+    function (error, payment) {
+      if (error) {
+        console.log(error.response);
+        throw error;
+      } else {
+        console.log(JSON.stringify(payment));
+        res.send("Success");
+      }
     }
-  });
+  );
 });
 
 app.get("/cancel", (req, res) => res.send("Cancelled"));
